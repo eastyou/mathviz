@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.10", "3.13"]
+        include:
+          - os: ubuntu-22.04
+            python-version: "3.9"
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Smoke test calculations and page
+        run: |
+          python -m mathviz linear -k 2 -b 1
+          python -m mathviz quadratic -a 1 -b -2 -c -3
+          python -m mathviz pythagoras -a 3 -b 4
+          python -m mathviz histogram 72 75 78 80 80 82 85 88 90 95 --bins 5
+          python -m mathviz html -o smoke.html
+          python -c "print(open('smoke.html', encoding='utf-8').read().count('勾股定理'))"

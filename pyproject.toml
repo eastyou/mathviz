@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mathviz"
+version = "0.1.0"
+description = "初中数学可视化：函数图像、勾股定理面积图、频数分布直方图"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "eastyou" }]
+keywords = ["education", "math", "visualization", "function-plot", "teacher", "cli"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Environment :: Console",
+  "Topic :: Education",
+]
+
+[project.scripts]
+mathviz = "mathviz.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/eastyou/mathviz"
+Source = "https://github.com/eastyou/mathviz"
+
+[tool.setuptools]
+packages = ["mathviz"]
